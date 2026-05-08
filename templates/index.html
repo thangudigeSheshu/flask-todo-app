@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% block body %}
+<div class="container my-5">
+    <h2 class="my-3"> Add Your TODO </h2>
+    <form action="/" method="post">
+        <div class="mb-3">
+            <label for="title1" class="form-label">Title</label>
+            <input type="text" class="form-control" name="title" id="title1" aria-describedby="emailHelp" />
+        </div>
+        <div class="mb-3">
+            <label for="desc1" class="form-label">Description</label>
+            <input type="text" name="desc" class="form-control" id="desc1" />
+        </div>
+
+        <button type="submit" class="btn btn-primary" id="btn">Submit</button>
+    </form>
+</div>
+
+<div class="container my-3">
+    <h2>Your TODO List</h2>
+    <table class="table my-4">
+        <thead>
+            <tr>
+                <th scope="col">SNO</th>
+                <th scope="col">Title</th>
+                <th scope="col">Description</th>
+                <th scope="col">Created At</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for todo in allTodo %}
+            <tr class="t-rows">
+                <th scope="row">{{loop.index}}</th>
+                <td>{{todo.title}}</td>
+                <td>{{todo.desc}}</td>
+                <td>{{todo.created_at}}</td>
+                <td><a href="/delete/{{todo.sno}}">
+                        <button class="btn btn-danger btn-sm">
+
+                            Delete
+
+                        </button>
+                    </a>
+                    <a href="/update/{{todo.sno}}">
+                        <button class="btn btn-primary btn-sm my-2">
+                            Update
+                        </button>
+                    </a>
+
+                </td>
+
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+
+    {% block script %}
+
+   <script>
+
+const searchInput = document.getElementById('searchInput')
+
+searchInput.addEventListener('keyup', () => {
+
+    const val = searchInput.value.toLowerCase()
+
+    const rows = document.querySelectorAll('.t-rows')
+
+    rows.forEach((row) => {
+
+        const text = row.textContent.toLowerCase()
+
+        const cells = row.querySelectorAll('td, th')
+
+        if (text.includes(val)) {
+
+            //shows all rows
+            row.style.display = ''
+
+            cells.forEach((cell) => {
+
+                if (val !== '') {
+                    cell.style.background = 'yellow'
+                }
+                else {
+                    //default value
+                    cell.style.background = ''
+                }
+
+            })
+
+        }
+        else {
+
+            row.style.display = 'none'
+
+        }
+
+    })
+
+})
+
+</script>
+
+    {% endblock %}
+
