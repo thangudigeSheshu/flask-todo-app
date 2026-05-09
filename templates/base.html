@@ -9,6 +9,41 @@
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='list.png',sizes='128x128') }}">
+
+    <style>
+        .top-section select,
+        .top-section input {
+            padding: 6px 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+
+        .bottom-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .pagination {
+            display: flex;
+            gap: 10px;
+        }
+
+        .pagination button {
+            padding: 8px 14px;
+            border: 1px solid #ccc;
+            background-color: white;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .pagination button:hover {
+            background-color: #ddd;
+        }
+
+    </style>
 </head>
 
 <body>
@@ -28,12 +63,7 @@
                         <a class="nav-link active" aria-current="page" href="/">Home</a>
                     </li>
             </div>
-            <form class="d-flex" role="search">
-
-                <input class="form-control me-2" id="searchInput" type="search" placeholder="Search Your TODO Lists"
-                    aria-label="Search">
-
-            </form>
+           
 
         </div>
     </nav>
@@ -85,6 +115,7 @@
 
     {% block script %}
     {% endblock %}
+
 
 
 </body>
