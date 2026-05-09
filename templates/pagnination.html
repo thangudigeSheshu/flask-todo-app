@@ -1,0 +1,532 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Pagination Table</title>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f2f2f2;
+        padding: 30px;
+      }
+
+      .container {
+        background-color: white;
+        padding: 25px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      h2 {
+        margin-bottom: 20px;
+        color: #444;
+      }
+
+      .top-section {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+      }
+
+      .top-section select,
+      .top-section input {
+        padding: 6px 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      thead {
+        background-color: #e5e5e5;
+      }
+
+      th,
+      td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+
+      tr:hover {
+        background-color: #f9f9f9;
+      }
+
+      tbody tr:nth-child(even) {
+        background-color: #fafafa;
+      }
+
+      .bottom-section {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 20px;
+      }
+
+      .pagination {
+        display: flex;
+        gap: 10px;
+      }
+
+      .pagination button {
+        padding: 8px 14px;
+        border: 1px solid #ccc;
+        background-color: white;
+        cursor: pointer;
+        border-radius: 5px;
+      }
+
+      .pagination button:hover {
+        background-color: #ddd;
+      }
+
+      .active {
+        color: white;
+        display: flex;
+        gap: 10px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h2>Simple Pagination Example</h2>
+
+      <div class="top-section">
+        <div>
+          Show
+
+          <select id="entries">
+            <option selected>5</option>
+            <option>10</option>
+            <option>25</option>
+            <option>50</option>
+          </select>
+
+          entries
+        </div>
+
+        <div>
+          Search:
+
+          <input type="text" placeholder="Search here" />
+        </div>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>SNo</th>
+            <th>Name</th>
+            <th>Position</th>
+            <th>Office</th>
+            <th>Age</th>
+            <th>Salary</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>John Smith</td>
+            <td>Software Engineer</td>
+            <td>New York</td>
+            <td>28</td>
+            <td>$75,000</td>
+          </tr>
+
+          <tr>
+            <td>2</td>
+            <td>Emma Johnson</td>
+            <td>UI Designer</td>
+            <td>London</td>
+            <td>25</td>
+            <td>$68,000</td>
+          </tr>
+
+          <tr>
+            <td>3</td>
+            <td>Michael Brown</td>
+            <td>Project Manager</td>
+            <td>Chicago</td>
+            <td>35</td>
+            <td>$95,000</td>
+          </tr>
+
+          <tr>
+            <td>4</td>
+            <td>Olivia Davis</td>
+            <td>Data Analyst</td>
+            <td>Toronto</td>
+            <td>30</td>
+            <td>$72,000</td>
+          </tr>
+
+          <tr>
+            <td>5</td>
+            <td>William Wilson</td>
+            <td>Backend Developer</td>
+            <td>Sydney</td>
+            <td>27</td>
+            <td>$80,000</td>
+          </tr>
+
+          <tr>
+            <td>6</td>
+            <td>Sophia Taylor</td>
+            <td>HR Manager</td>
+            <td>Berlin</td>
+            <td>32</td>
+            <td>$85,000</td>
+          </tr>
+
+          <tr>
+            <td>7</td>
+            <td>James Anderson</td>
+            <td>QA Engineer</td>
+            <td>Dubai</td>
+            <td>29</td>
+            <td>$65,000</td>
+          </tr>
+
+          <tr>
+            <td>8</td>
+            <td>Isabella Thomas</td>
+            <td>Business Analyst</td>
+            <td>Paris</td>
+            <td>31</td>
+            <td>$78,000</td>
+          </tr>
+
+          <tr>
+            <td>9</td>
+            <td>Benjamin Moore</td>
+            <td>DevOps Engineer</td>
+            <td>San Francisco</td>
+            <td>33</td>
+            <td>$110,000</td>
+          </tr>
+
+          <tr>
+            <td>10</td>
+            <td>Mia Martin</td>
+            <td>Frontend Developer</td>
+            <td>Los Angeles</td>
+            <td>26</td>
+            <td>$74,000</td>
+          </tr>
+
+          <tr>
+            <td>11</td>
+            <td>Lucas White</td>
+            <td>Cyber Security Analyst</td>
+            <td>Singapore</td>
+            <td>29</td>
+            <td>$88,000</td>
+          </tr>
+
+          <tr>
+            <td>12</td>
+            <td>Charlotte Harris</td>
+            <td>Marketing Manager</td>
+            <td>Madrid</td>
+            <td>34</td>
+            <td>$82,000</td>
+          </tr>
+
+          <tr>
+            <td>13</td>
+            <td>Henry Clark</td>
+            <td>Cloud Engineer</td>
+            <td>Seattle</td>
+            <td>31</td>
+            <td>$105,000</td>
+          </tr>
+
+          <tr>
+            <td>14</td>
+            <td>Amelia Lewis</td>
+            <td>Content Writer</td>
+            <td>Rome</td>
+            <td>26</td>
+            <td>$60,000</td>
+          </tr>
+
+          <tr>
+            <td>15</td>
+            <td>Daniel Walker</td>
+            <td>Machine Learning Engineer</td>
+            <td>Bangalore</td>
+            <td>30</td>
+            <td>$115,000</td>
+          </tr>
+
+          <tr>
+            <td>16</td>
+            <td>Evelyn Hall</td>
+            <td>Finance Analyst</td>
+            <td>Zurich</td>
+            <td>33</td>
+            <td>$92,000</td>
+          </tr>
+
+          <tr>
+            <td>17</td>
+            <td>Matthew Allen</td>
+            <td>Network Engineer</td>
+            <td>Tokyo</td>
+            <td>28</td>
+            <td>$77,000</td>
+          </tr>
+
+          <tr>
+            <td>18</td>
+            <td>Harper Young</td>
+            <td>Product Manager</td>
+            <td>Amsterdam</td>
+            <td>35</td>
+            <td>$120,000</td>
+          </tr>
+
+          <tr>
+            <td>19</td>
+            <td>David King</td>
+            <td>Technical Support</td>
+            <td>Dublin</td>
+            <td>27</td>
+            <td>$58,000</td>
+          </tr>
+
+          <tr>
+            <td>20</td>
+            <td>Abigail Scott</td>
+            <td>Database Administrator</td>
+            <td>Melbourne</td>
+            <td>32</td>
+            <td>$97,000</td>
+          </tr>
+
+          <tr>
+            <td>21</td>
+            <td>Joseph Green</td>
+            <td>Software Tester</td>
+            <td>Delhi</td>
+            <td>29</td>
+            <td>$67,000</td>
+          </tr>
+
+          <tr>
+            <td>22</td>
+            <td>Emily Adams</td>
+            <td>Graphic Designer</td>
+            <td>Vienna</td>
+            <td>25</td>
+            <td>$64,000</td>
+          </tr>
+
+          <tr>
+            <td>23</td>
+            <td>Samuel Baker</td>
+            <td>AI Researcher</td>
+            <td>Boston</td>
+            <td>36</td>
+            <td>$135,000</td>
+          </tr>
+
+          <tr>
+            <td>24</td>
+            <td>Ella Nelson</td>
+            <td>Operations Manager</td>
+            <td>Bangkok</td>
+            <td>38</td>
+            <td>$98,000</td>
+          </tr>
+
+          <tr>
+            <td>25</td>
+            <td>Alexander Carter</td>
+            <td>Full Stack Developer</td>
+            <td>Hyderabad</td>
+            <td>28</td>
+            <td>$90,000</td>
+          </tr>
+
+          <tr>
+            <td>26</td>
+            <td>Scarlett Mitchell</td>
+            <td>SEO Specialist</td>
+            <td>Dubai</td>
+            <td>27</td>
+            <td>$62,000</td>
+          </tr>
+
+          <tr>
+            <td>27</td>
+            <td>Jack Perez</td>
+            <td>System Administrator</td>
+            <td>Hong Kong</td>
+            <td>31</td>
+            <td>$85,000</td>
+          </tr>
+
+          <tr>
+            <td>28</td>
+            <td>Grace Roberts</td>
+            <td>Business Consultant</td>
+            <td>Johannesburg</td>
+            <td>37</td>
+            <td>$108,000</td>
+          </tr>
+
+          <tr>
+            <td>29</td>
+            <td>Owen Turner</td>
+            <td>Mobile App Developer</td>
+            <td>San Diego</td>
+            <td>26</td>
+            <td>$93,000</td>
+          </tr>
+
+          <tr>
+            <td>30</td>
+            <td>Lily Phillips</td>
+            <td>Data Scientist</td>
+            <td>Toronto</td>
+            <td>34</td>
+            <td>$125,000</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="bottom-section">
+        <div>Showing 1 to 10 of 10 entries</div>
+
+        <div class="pagination">
+          <button class="prev">Previous</button>
+
+          <div class="active"></div>
+
+          <button class="next">Next</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let rows = document.querySelectorAll("tbody tr");
+      let nextBtn = document.querySelector(".next");
+      let prevBtn = document.querySelector(".prev");
+      let entry = document.querySelector("#entries");
+      let bottomSecDiv = document.querySelector(".bottom-section > div");
+      let act = document.querySelector(".active");
+      let currPage = 1;
+      let rowsPerPage = 5;
+
+      entry.addEventListener("change", () => {
+        rowsPerPage = parseInt(entry.value);
+        currPage = 1;
+        changeBottonNumbers(Math.ceil(rows.length / rowsPerPage));
+        showPaging(currPage);
+      });
+
+      let currVal = Math.ceil(rows.length / rowsPerPage);
+      changeBottonNumbers(currVal);
+
+      function showPaging(page) {
+        rows.forEach((row, ind) => {
+          if (ind >= (page - 1) * rowsPerPage && ind < page * rowsPerPage) {
+            row.style.display = "";
+          } else {
+            row.style.display = "none";
+          }
+        });
+
+        bottomSecDiv.innerHTML = `Showing ${(page - 1) * rowsPerPage + 1} to ${Math.min(page * rowsPerPage, rows.length)} of ${rows.length} entries`;
+
+        let totalPages = Math.ceil(rows.length / rowsPerPage);
+
+        if (page >= totalPages) {
+          nextBtn.style.visibility = "hidden";
+        } else {
+          nextBtn.style.visibility = "visible";
+        }
+
+        if (page == 1) {
+          prevBtn.style.visibility = "hidden";
+        } else {
+          prevBtn.style.visibility = "visible";
+        }
+      }
+
+      showPaging(currPage);
+
+      nextBtn.addEventListener("click", () => {
+        if (currPage < Math.ceil(rows.length / rowsPerPage)) {
+          currPage++;
+          showPaging(currPage);
+
+          let allBtns = act.querySelectorAll("button");
+
+          allBtns.forEach((e) => {
+            e.style.backgroundColor = "";
+            e.style.color = "";
+          });
+
+          allBtns[currPage - 1].style.backgroundColor = "grey";
+          allBtns[currPage - 1].style.color = "white";
+        }
+      });
+
+      prevBtn.addEventListener("click", () => {
+        if (currPage > 1) {
+          currPage--;
+          showPaging(currPage);
+
+          let allBtns = act.querySelectorAll("button");
+
+          allBtns.forEach((e) => {
+            e.style.backgroundColor = "";
+            e.style.color = "";
+          });
+
+          allBtns[currPage - 1].style.backgroundColor = "grey";
+          allBtns[currPage - 1].style.color = "white";
+        }
+      });
+
+      function changeBottonNumbers(val) {
+        act.innerHTML = "";
+        for (let i = 1; i <= val; i++) {
+          let createBut = document.createElement("button");
+          createBut.textContent = i;
+          act.appendChild(createBut);
+          createBut.addEventListener("click", () => {
+            act.querySelectorAll("button").forEach((e) => {
+              e.style.backgroundColor = "";
+              e.style.color = "";
+            });
+            createBut.style.backgroundColor = "grey";
+            createBut.style.color = "white";
+            currPage = i;
+            showPaging(currPage);
+          });
+        }
+
+        act.querySelector("button").style.backgroundColor = "grey";
+        act.querySelector("button").style.color = "white";
+      }
+    </script>
+  </body>
+</html>
