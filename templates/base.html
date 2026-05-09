@@ -42,7 +42,6 @@
         .pagination button:hover {
             background-color: #ddd;
         }
-
     </style>
 </head>
 
@@ -63,7 +62,7 @@
                         <a class="nav-link active" aria-current="page" href="/">Home</a>
                     </li>
             </div>
-           
+
 
         </div>
     </nav>
@@ -81,10 +80,15 @@
     <script>
 
         Swal.fire({
-            title: "Success!",
-            text: "Todo Added Succesfully",
-            icon: "success"
-        })
+            icon: 'success',
+            title: 'Deleted!',
+            text: 'TODO deleted successfully',
+            confirmButtonColor: '#3085d6'
+        }).then(() => {
+
+            window.location.href = "/";
+
+        });
 
     </script>
     {% endif %}
@@ -93,22 +97,31 @@
     <script>
 
         Swal.fire({
-            title: "Success!",
-            text: "Todo Deleted",
-            icon: "success"
-        })
+            icon: 'success',
+            title: 'Updated!',
+            text: 'TODO updated successfully',
+            confirmButtonColor: '#3085d6'
+        }).then(() => {
+
+            window.location.href = "/";
+
+        });
 
     </script>
     {% endif %}
 
     {% if updated %}
     <script>
-
         Swal.fire({
-            title: "Success!",
-            text: "Todo Updated Successfully",
-            icon: "success"
-        })
+            icon: 'success',
+            title: 'Added!',
+            text: 'TODO added successfully',
+            confirmButtonColor: '#3085d6'
+        }).then(() => {
+
+            window.location.href = "/";
+
+        });
 
     </script>
     {% endif %}
