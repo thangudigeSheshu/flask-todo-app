@@ -1,47 +1,174 @@
 {% extends 'base.html' %}
 {% block body %}
+<style>
+    .pagination {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .page-numbers {
+        display: flex;
+        gap: 10px;
+    }
+
+    .page-numbers button {
+        padding: 6px 12px;
+        border: 1px solid #ccc;
+        background-color: white;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .page-numbers button:hover {
+        background-color: #ddd;
+    }
+
+    .current-page {
+        background-color: grey !important;
+        color: white;
+    }
+
+    .bottom-section {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 20px;
+    }
+
+    table {
+        width: 100%;
+        table-layout: fixed;
+    }
+
+
+
+    td:nth-child(3),
+    th:nth-child(3) {
+        width: 35%;
+    }
+
+    td:nth-child(5),
+    th:nth-child(5) {
+        width: 180px;
+    }
+
+    td:nth-child(5) {
+        white-space: nowrap;
+    }
+</style>
+
+
+
 <div class="container my-5">
-    <h2 class="my-3"> Add Your TODO </h2>
+
+    <h2 class="my-3">
+        Add Your TODO
+    </h2>
+
     <form action="/" method="post">
+
         <div class="mb-3">
-            <label for="title1" class="form-label">Title</label>
-            <input type="text" class="form-control" name="title" id="title1" aria-describedby="emailHelp" />
-        </div>
-        <div class="mb-3">
-            <label for="desc1" class="form-label">Description</label>
-            <input type="text" name="desc" class="form-control" id="desc1" />
+
+            <label for="title1" class="form-label">
+                Title
+            </label>
+
+            <input type="text" class="form-control" name="title" id="title1" />
+
         </div>
 
-        <button type="submit" class="btn btn-primary" id="btn">Submit</button>
+        <div class="mb-3">
+
+            <label for="desc1" class="form-label">
+                Description
+            </label>
+
+            <input type="text" name="desc" class="form-control" id="desc1" />
+
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+            Submit
+        </button>
+
     </form>
+
 </div>
 
 <div class="container my-3">
-    <h2>Your TODO List</h2>
+
+    <div class="top-section d-flex justify-content-between align-items-center">
+
+        <div>
+
+            Show
+
+            <select id="entries">
+
+                <option selected>5</option>
+                <option>10</option>
+                <option>25</option>
+                <option>50</option>
+
+            </select>
+
+            entries
+
+        </div>
+
+        <form class="d-flex" role="search">
+
+            <input class="form-control me-2" id="searchInput" type="search" placeholder="Search Your TODO Lists"
+                aria-label="Search">
+
+        </form>
+
+    </div>
+
+    <h2 class="my-3">
+        Your TODO List
+    </h2>
+
     <table class="table my-4">
+
         <thead>
+
             <tr>
-                <th scope="col">SNO</th>
-                <th scope="col">Title</th>
-                <th scope="col">Description</th>
-                <th scope="col">Created At</th>
-                <th scope="col">Actions</th>
+
+                <th>SNO</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Created At</th>
+                <th>Actions</th>
+
             </tr>
+
         </thead>
+
         <tbody>
+
             {% for todo in allTodo %}
+
             <tr class="t-rows">
-                <th scope="row">{{loop.index}}</th>
+
+                <th>{{loop.index}}</th>
+
                 <td>{{todo.title}}</td>
+
                 <td>{{todo.desc}}</td>
+
                 <td>{{todo.created_at}}</td>
-                <td><a href="/delete/{{todo.sno}}">
+
+                <td>
+
+                    <a href="/delete/{{todo.sno}}">
                         <button class="btn btn-danger btn-sm">
-
                             Delete
-
                         </button>
                     </a>
+
                     <a href="/update/{{todo.sno}}">
                         <button class="btn btn-primary btn-sm my-2">
                             Update
@@ -51,59 +178,252 @@
                 </td>
 
             </tr>
+
             {% endfor %}
+
         </tbody>
+
     </table>
+
+    <div class="bottom-section">
+
+        <div>
+            Showing 1 to 10 of 10 entries
+        </div>
+
+        <div class="pagination">
+
+            <button class="prev">
+                Previous
+            </button>
+
+            <div class="page-numbers"></div>
+
+            <button class="next">
+                Next
+            </button>
+
+        </div>
+
+    </div>
+
 </div>
+
 {% endblock %}
 
-    {% block script %}
+{% block script %}
 
-   <script>
+<script>
 
-const searchInput = document.getElementById('searchInput')
+    const searchInput = document.getElementById('searchInput');
 
-searchInput.addEventListener('keyup', () => {
+    searchInput.addEventListener('keyup', () => {
 
-    const val = searchInput.value.toLowerCase()
+        const val = searchInput.value.toLowerCase();
 
-    const rows = document.querySelectorAll('.t-rows')
+        const rowsSearch = document.querySelectorAll('.t-rows');
 
-    rows.forEach((row) => {
+        rowsSearch.forEach((row) => {
 
-        const text = row.textContent.toLowerCase()
+            const text = row.textContent.toLowerCase();
 
-        const cells = row.querySelectorAll('td, th')
+            const cells = row.querySelectorAll('td, th');
 
-        if (text.includes(val)) {
+            if (text.includes(val)) {
 
-            //shows all rows
-            row.style.display = ''
+                row.style.display = '';
 
-            cells.forEach((cell) => {
+                cells.forEach((cell) => {
 
-                if (val !== '') {
-                    cell.style.background = 'yellow'
-                }
-                else {
-                    //default value
-                    cell.style.background = ''
-                }
+                    if (val !== '') {
 
-            })
+                        cell.style.background = 'yellow';
+
+                    }
+                    else {
+
+                        cell.style.background = '';
+
+                    }
+
+                });
+
+            }
+            else {
+
+                row.style.display = 'none';
+
+            }
+
+        });
+
+    });
+
+    let rows = document.querySelectorAll("tbody tr");
+
+    let nextBtn = document.querySelector(".next");
+
+    let prevBtn = document.querySelector(".prev");
+
+    let entry = document.querySelector("#entries");
+
+    let bottomSecDiv = document.querySelector(".bottom-section > div");
+
+    let act = document.querySelector(".page-numbers");
+
+    let currPage = 1;
+
+    let rowsPerPage = 5;
+
+    entry.addEventListener("change", () => {
+
+        rowsPerPage = parseInt(entry.value);
+
+        currPage = 1;
+
+        changeBottonNumbers(
+            Math.ceil(rows.length / rowsPerPage)
+        );
+
+        showPaging(currPage);
+
+    });
+
+    let currVal = Math.ceil(rows.length / rowsPerPage);
+
+    changeBottonNumbers(currVal);
+
+    function showPaging(page) {
+
+        rows.forEach((row, ind) => {
+
+            if (
+                ind >= (page - 1) * rowsPerPage &&
+                ind < page * rowsPerPage
+            ) {
+
+                row.style.display = "";
+
+            }
+            else {
+
+                row.style.display = "none";
+
+            }
+
+        });
+
+        bottomSecDiv.innerHTML =
+            `Showing ${(page - 1) * rowsPerPage + 1}
+    to ${Math.min(page * rowsPerPage, rows.length)}
+    of ${rows.length} entries`;
+
+        let totalPages = Math.ceil(rows.length / rowsPerPage);
+
+        if (page >= totalPages) {
+
+            nextBtn.style.visibility = "hidden";
 
         }
         else {
 
-            row.style.display = 'none'
+            nextBtn.style.visibility = "visible";
 
         }
 
-    })
+        if (page == 1) {
 
-})
+            prevBtn.style.visibility = "hidden";
+
+        }
+        else {
+
+            prevBtn.style.visibility = "visible";
+
+        }
+
+    }
+
+    showPaging(currPage);
+
+    nextBtn.addEventListener("click", () => {
+
+        if (currPage < Math.ceil(rows.length / rowsPerPage)) {
+
+            currPage++;
+
+            showPaging(currPage);
+
+            let allBtns = act.querySelectorAll("button");
+
+            allBtns.forEach((e) => {
+
+                e.classList.remove("current-page");
+
+            });
+
+            allBtns[currPage - 1].classList.add("current-page");
+
+        }
+
+    });
+
+    prevBtn.addEventListener("click", () => {
+
+        if (currPage > 1) {
+
+            currPage--;
+
+            showPaging(currPage);
+
+            let allBtns = act.querySelectorAll("button");
+
+            allBtns.forEach((e) => {
+
+                e.classList.remove("current-page");
+
+            });
+
+            allBtns[currPage - 1].classList.add("current-page");
+
+        }
+
+    });
+
+    function changeBottonNumbers(val) {
+
+        act.innerHTML = "";
+
+        for (let i = 1; i <= val; i++) {
+
+            let createBut = document.createElement("button");
+
+            createBut.textContent = i;
+
+            act.appendChild(createBut);
+
+            createBut.addEventListener("click", () => {
+
+                act.querySelectorAll("button").forEach((e) => {
+
+                    e.classList.remove("current-page");
+
+                });
+
+                createBut.classList.add("current-page");
+
+                currPage = i;
+
+                showPaging(currPage);
+
+            });
+
+        }
+
+        act.querySelector("button").classList.add("current-page");
+
+    }
 
 </script>
 
-    {% endblock %}
-
+{% endblock %}
