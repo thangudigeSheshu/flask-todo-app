@@ -61,6 +61,7 @@ def home():
 
     # Check if the URL includes '?updated=True' after an update operation
     updated = request.args.get('updated')
+    deleted = request.args.get('deleted')
 
     # If form was submitted, create a new todo record
     if request.method == 'POST':
@@ -81,8 +82,7 @@ def home():
     allTodo = TOdo.query.all()
 
     # Render the index.html template with data
-    return render_template('index.html', allTodo=allTodo, success=success, updated=updated)
-
+    return render_template('index.html', allTodo=allTodo, success=success, updated=updated, deleted=deleted)
 # Route to delete a todo.
 # Example: /delete/3 deletes the todo with sno=3
 @app.route('/delete/<int:sno>')
@@ -98,7 +98,7 @@ def delete(sno):
         db.session.commit()
 
     # Redirect so the browser sees the fresh todo list after deletion.
-    return redirect('/')
+    return redirect('/?deleted=True')
 
 # Route to update a todo.
 # Methods=['GET','POST'] means:
