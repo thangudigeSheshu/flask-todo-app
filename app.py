@@ -3,6 +3,7 @@ from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 import pytz
+from seed_data import DEFAULT_TODOS
 
 # Create the Flask application object
 app = Flask(__name__)
@@ -44,6 +45,10 @@ class TOdo(db.Model):
 # app.app_context() is required because db.create_all() needs Flask app context.
 with app.app_context():
     db.create_all()
+    if TOdo.query.count() == 0:
+        for title, desc in DEFAULT_TODOS:
+            db.session.add(TOdo(title=title, desc=desc))
+        db.session.commit()
 
 # Route for the homepage.
 # Methods=['GET','POST'] means:
